@@ -21,9 +21,9 @@ return new class extends Migration
         });
 
         Schema::create('room_user', function(Blueprint $table) {
-            $table->unsignedBigInteger('roome_id');
+            $table->unsignedBigInteger('room_id');
             $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
-            $table->unsignedBigInteger('role_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->primary(['room_id' , 'user_id']);
         });

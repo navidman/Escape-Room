@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("room_id")->index()->nullable();
             $table->timestamp("start");
-            $table->end("end");
+            $table->timestamp("end");
+            $table->boolean("is_booked")->default(false);
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('room_id')
                 ->references('id')

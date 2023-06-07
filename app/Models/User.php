@@ -36,4 +36,14 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'user_id');
+    }
+
+    public function rooms()
+    {
+        return $this->belongsToMany(Room::class);
+    }
 }
