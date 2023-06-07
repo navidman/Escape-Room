@@ -3,10 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Room;
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class RoomSeeder extends Seeder
 {
@@ -21,16 +18,19 @@ class RoomSeeder extends Seeder
                 'name' => 'Prison Break',
                 'theme' => 'Red',
                 'max_participants' => 9,
+                'price' => 1000,
             ],
             [
                 'name' => 'Enigma',
                 'theme' => 'Blue',
                 'max_participants' => 6,
+                'price' => 2000,
             ],
             [
                 'name' => 'Scary Lab',
                 'theme' => 'White',
                 'max_participants' => 7,
+                'price' => 3000,
             ]
         ];
 

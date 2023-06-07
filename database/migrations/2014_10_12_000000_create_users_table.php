@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('mobile')->unique();
             $table->string('password');
-            $table->timestamp('birthday');
+            $table->date('birthday');
             $table->timestamps();
             $table->softDeletes();
         });

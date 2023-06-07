@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -21,7 +22,7 @@ class UserSeeder extends Seeder
                 'name' => 'test test',
                 'email' => 'test@test.com',
                 'mobile' => '09120001111',
-                'birthday' => fake()->dateTime(),
+                'birthday' => Carbon::now(),
                 'password' => Hash::make('12345678'),
             ],
             [
