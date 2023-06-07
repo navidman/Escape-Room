@@ -8,23 +8,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Booking extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
     protected $guarded = ['id'];
 
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function timeSlot()
+    public function timeSlot(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(TimeSlot::class, 'time_slot_id');
     }
 
-    public function room()
+    public function room(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Room::class, 'room_id');
     }
 }
-

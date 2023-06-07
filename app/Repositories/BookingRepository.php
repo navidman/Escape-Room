@@ -4,9 +4,14 @@ namespace App\Repositories;
 
 use App\Models\Booking;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 
 class BookingRepository implements BookingRepositoryInterface
 {
+    public function get($id)
+    {
+        return Booking::whereId($id)->whereUserId(Auth::user()->id)->firstOrFail();
+    }
     public function getBookingsByUserId($userId)
     {
         return Booking::whereUserId($userId)->get();
@@ -14,14 +19,11 @@ class BookingRepository implements BookingRepositoryInterface
 
     public function save($data)
     {
-        $booking = Booking::create($data);
-        return $booking;
+        return Booking::create($data);
     }
 
-    public function delete($id)
+    public function delete($booking)
     {
-
+        return $booking->delete();
     }
-
-
 }

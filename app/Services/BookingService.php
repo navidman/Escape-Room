@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-
 use App\Models\Booking;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
 use App\Repositories\Interfaces\RoomRepositoryInterface;
@@ -11,8 +10,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
-use function PHPUnit\Framework\isNull;
 
 class BookingService
 {
@@ -81,6 +78,41 @@ class BookingService
         return $this->bookingRepository->getBookingsByUserId(Auth::user()->id);
     }
 
+    public function deleteBooking($id)
+    {
+        $booking = $this->bookingRepository->get($id);
+        if (!$booking) {
+            return response('Booking not found!', Response::HTTP_BAD_REQUEST);
+        }
+        $isCancelationPossible = $this->checkCancelationRules($booking);
+        if (!$isCancelationPossible) {
+            return response('It is too late to cancel this booking!', Response::HTTP_BAD_REQUEST);
+        }
+        $timeSlot = $this->timeSlotRepository->get($booking->time_slot_id);
+        DB::beginTransaction();
+
+        //reduce time slot participants and turn is_booked status to false
+        $this->timeSlotRepository->update($timeSlot, [
+            'participants' => $timeSlot->participants - $booking->count,
+            'is_booked' => false
+        ]);
+
+        //delete the booking
+        $this->bookingRepository->delete($booking);
+        //TODO return booking price to the balance of user
+        DB::commit();
+        return response(['data' =>'Booking with id ' . $id . ' canceled successfully!'], Response::HTTP_OK);
+    }
+
+    private function checkCancelationRules($booking)
+    {
+        //TODO think what other rules needed to be checked here!
+        if ($booking->timeSlot->start >= Carbon::now()) {
+            return true;
+        }
+        return false;
+    }
+
     private function checkCapacity($timeSlot, $room, $bookingParticipants)
     {
         if ($room->max_participants >= $bookingParticipants + $timeSlot->participants) {
@@ -117,6 +149,7 @@ class BookingService
 
     private function paymentService($price, $user)
     {
+        //Do payment stuff
         return true;
     }
 

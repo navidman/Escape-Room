@@ -9,25 +9,11 @@ class RoomRepository implements RoomRepositoryInterface
 {
     public function all()
     {
-        $rooms = Room::all();
-        return $rooms;
+        return Room::all();
     }
 
     public function get($id)
     {
-        $room = Room::find($id);
-        return $room;
+        return Room::find($id);
     }
-
-    public function save($data)
-    {
-
-    }
-
-    public function delete($id)
-    {
-
-    }
-
-
 }

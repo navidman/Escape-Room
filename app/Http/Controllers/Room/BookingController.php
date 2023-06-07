@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Room;
 use App\Facades\BookingFacade;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookingRequest;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class BookingController extends Controller
@@ -13,8 +12,7 @@ class BookingController extends Controller
     public function store(BookingRequest $request)
     {
         try {
-            $booking = BookingFacade::storeBooking($request);
-            return $booking;
+            return BookingFacade::storeBooking($request);
         } catch (\Throwable $throwable) {
             report($throwable);
             return response('Internal server error!', Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -26,6 +24,16 @@ class BookingController extends Controller
         try {
             $bookings = BookingFacade::getBookingList();
             return response(['data' => $bookings], Response::HTTP_OK);
+        } catch (\Throwable $throwable) {
+            report($throwable);
+            return response('Internal server error!', Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            return BookingFacade::deleteBooking($id);
         } catch (\Throwable $throwable) {
             report($throwable);
             return response('Internal server error!', Response::HTTP_INTERNAL_SERVER_ERROR);

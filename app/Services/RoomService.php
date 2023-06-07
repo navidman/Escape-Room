@@ -14,14 +14,12 @@ class RoomService
     }
     public function getRoomList()
     {
-        $rooms = $this->roomRepository->all();
-        return $rooms;
+        return $this->roomRepository->all();
     }
 
     public function getRoom($id)
     {
-        $room = $this->roomRepository->get($id);
-        return $room;
+        return $this->roomRepository->get($id);
     }
 
     public function getRoomTimeSlots($id)

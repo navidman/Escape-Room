@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,7 +11,10 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
+    use SoftDeletes;
 
     protected $guarded = ['id'];
 
@@ -23,13 +25,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    /**
+     * @var mixed
+     */
+    private $password;
 
 
     public function findForPassport($username) {
         return $this->where('username', $username)->first();
     }
 
-    public function checkPassword($password)
+    public function checkPassword($password): bool
     {
         if ($this->password and Hash::check($password, $this->password)) {
             return true;
@@ -41,5 +47,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Booking::class, 'user_id');
     }
-
 }

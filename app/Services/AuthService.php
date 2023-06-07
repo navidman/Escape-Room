@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +23,6 @@ class AuthService
             '/oauth/token',
             'post'
         );
-
         $instance = Route::dispatch($tokenRequest);
         $tokenInfo = json_decode($instance->getContent(), true);
         $tokenInfo = collect($tokenInfo);
@@ -38,7 +35,6 @@ class AuthService
             'role' => $user->role,
         ];
         $tokenInfo['user'] = $user_info;
-
         return $tokenInfo;
     }
 

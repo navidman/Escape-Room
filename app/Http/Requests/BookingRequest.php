@@ -29,13 +29,11 @@ class BookingRequest extends FormRequest
             'roomId' => ['required', 'integer', 'min:1', 'max:500'],
             'participants' => ['required', 'integer', 'min:1', 'max:20'],
         ];
-
     }
 
     protected function failedValidation(Validator $validator): void
     {
         $errors = $validator->errors();
-
         throw new HttpResponseException(response( $errors,Response::HTTP_BAD_REQUEST));
     }
 }

@@ -8,5 +8,5 @@ interface BookingRepositoryInterface
 
     public function save($data);
 
-    public function delete($id);
+    public function delete($booking);
 }
