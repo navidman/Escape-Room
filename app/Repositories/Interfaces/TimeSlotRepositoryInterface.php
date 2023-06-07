@@ -12,4 +12,7 @@ interface TimeSlotRepositoryInterface
 
     public function delete($id);
 
+    public function update($timeSlot, $data);
+
+
 }

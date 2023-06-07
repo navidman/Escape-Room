@@ -12,11 +12,6 @@ class Room extends Model
 
     protected $guarded = ['id'];
 
-    public function users()
-    {
-        return $this->belongsToMany(User::class);
-    }
-
     public function timeSlots()
     {
         return $this->hasMany(TimeSlot::class, 'room_id');

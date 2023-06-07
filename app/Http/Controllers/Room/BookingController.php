@@ -11,12 +11,17 @@ class BookingController extends Controller
 {
     public function store(Request $request)
     {
-//        try {
+        try {
             $booking = BookingFacade::storeBooking($request);
-            return response(['data' => $booking], Response::HTTP_OK);
-//        } catch (\Throwable $throwable) {
-//            report($throwable);
-//            return response('Internal server error!', Response::HTTP_INTERNAL_SERVER_ERROR);
-//        }
+            return $booking;
+        } catch (\Throwable $throwable) {
+            report($throwable);
+            return response('Internal server error!', Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function index()
+    {
+        
     }
 }

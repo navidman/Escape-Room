@@ -14,8 +14,7 @@ class TimeSlotRepository implements TimeSlotRepositoryInterface
 
     public function get($id)
     {
-        $timeSlot = TimeSlot::find($id);
-        return $timeSlot;
+        return TimeSlot::find($id);
     }
 
     public function save($data)
@@ -27,4 +26,10 @@ class TimeSlotRepository implements TimeSlotRepositoryInterface
     {
 
     }
+
+    public function update($timeSlot, $data)
+    {
+        return $timeSlot->update($data);
+    }
+
 }
