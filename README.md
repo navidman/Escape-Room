@@ -1,66 +1,261 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+#  Book-Store
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## <g-emoji class="g-emoji" alias="arrow_down" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2b07.png">⬇️</g-emoji> Installation
 
-## About Laravel
+This is a test app for just showing my code skills in laravel. please clone the project and define a database and config it in .env .then run these commands listed below:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```bash
+composer install
+```
+```bash
+php artisan migrate
+```
+```bash
+php artisan db:seed -> users table(book-stores) and books table and cards table will be filled.
+```
+```bash
+php artisan passport:install
+```
+```bash
+php artisan key:generate
+```
+```bash
+php artisan optimize
+```
+```bash
+php artisan serve
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+I wrote a single test for books index api just as sample. you can test it by running <code>php artisan test</code> command
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-----
 
-## Learning Laravel
+## <g-emoji class="g-emoji" alias="book" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f4d6.png">📖</g-emoji> API's
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. api/login POST
+```json
+parameters:
+    {
+        "email":    "test@example.com"
+        "password": 12345678
+    }
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+response:
+    {
+       "token_type": "Bearer",
+       "expires_in": 172800,
+       "access_token": "CJGREBNRFYMowA9vWuwfQFgkN_yaqVNMY-XecmQxXN-B6rw",
+       "refresh_token": "CJGREBNRFYMowA9vWuwfQFgkN_yaqVNMY-XecmQxXN-B6rw",
+       "user": {
+       "name": "test",
+       "email": "test@example.com",
+       "mobile": "09129120912"
+       }
+    }
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. api/revoke POST
+```json
+Response:
+    {
+      "message": "با موفقیت خارج شدید"
+    }
+```
 
-## Laravel Sponsors
+### 3. api/books GET
+```json
+Response:
+    {
+        "data": [
+            {
+                "id": 1,
+                "title": "Otho Hudson", 
+                "book_number": "ELHGTDTENY",
+                "price": "12923",
+                "quantity": 74,
+                "created_at": "2022-08-13T21:09:30.000000Z",
+                "updated_at": "2022-08-13T21:11:07.000000Z",
+                "deleted_at": null
+            },
+            {
+                "id": 2,
+                "title": "Dr. Judson Lehner II",
+                "book_number": "89WWF4GGYP",
+                "price": "11076",
+                "quantity": 39,
+                "created_at": "2022-08-13T21:09:30.000000Z",
+                "updated_at": "2022-08-13T21:09:30.000000Z",
+                "deleted_at": null
+            },
+        ]
+    }
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### 4. api/order POST
+```json
+Parameters:
+    {
+        "title":       "Otho Hudson"
+        "book_number": "ELHGTDTENY"
+        "amount":       20     
+    }
 
-### Premium Partners
+Response:
+    {
+        "data": {
+            "user_id": 1,
+            "book_id": 1,
+            "order_number": "UYESAUFNKV",
+            "quantity": "20",
+            "price": 258460,
+            "book": {
+                "id": 1,
+                "title": "Otho Hudson",
+                "book_number": "ELHGTDTENY",
+                "price": "12923",
+                "quantity": 74,
+                "created_at": "2022-08-13T21:09:30.000000Z",
+                "updated_at": "2022-08-13T21:11:07.000000Z",
+                "deleted_at": null
+            },
+            "updated_at": "2022-08-14T20:31:33.000000Z",
+            "created_at": "2022-08-14T20:31:33.000000Z",
+            "id": 2
+        }
+    }
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### 5. api/payment POST
+```json
+Parameters:
+    {
+      "amount": 200
+      "iban":   "TN1946981212305359050634"
+    }
 
-## Contributing
+Response:
+    {
+        "data": {
+            "user_id": 11,
+            "card_id": 11,
+            "price": "200",
+            "updated_at": "2022-08-14T20:50:32.000000Z",
+            "created_at": "2022-08-14T20:50:32.000000Z",
+            "id": 7
+        }
+    }
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 6. api/report/accounting  GET
+```json
+Response:
+    {
+        "data": [
+            {
+                "id": 1,
+                "user_id": 1,
+                "to_pay": "51692",
+                "created_at": "2022-08-13T21:11:07.000000Z",
+                "updated_at": "2022-08-14T20:31:33.000000Z",
+                "deleted_at": null
+            },
+            {
+                "id": 2,
+                "user_id": 11,
+                "to_pay": "51492",
+                "created_at": "2022-08-14T20:50:15.000000Z",
+                "updated_at": "2022-08-14T20:50:32.000000Z",
+                "deleted_at": null
+            }
+        ]
+    }
+```
 
-## Code of Conduct
+### 7. api/report/orders    POST   ->  sends orders groupBy user_id
+```json
+Parameters:
+    {
+        "from": "date_format:Y-m-d   >  2022-08-14  > optional"
+        "to":   "date_format:Y-m-d   >  2022-08-16  > optional "   
+    }
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Response:
+    {
+        "data": {
+            "1": [
+                {
+                    "id": 1,
+                    "user_id": 1,
+                    "book_id": 1,
+                    "order_number": "CTKTA1LBQ7",
+                    "quantity": 2,
+                    "price": "25846",
+                    "book": "{\"id\": 1, \"price\": \"12923\", \"title\": \"Otho Hudson\", \"quantity\": 76, \"created_at\": \"2022-08-13T21:09:30.000000Z\", \"deleted_at\": null, \"updated_at\": \"2022-08-13T21:09:30.000000Z\", \"book_number\": \"ELHGTDTENY\"}",
+                    "created_at": "2022-08-13T21:11:07.000000Z",
+                    "updated_at": "2022-08-13T21:11:07.000000Z",
+                    "deleted_at": null
+                }
+            ],
+            "11": [
+                {
+                    "id": 3,
+                    "user_id": 11,
+                    "book_id": 1,
+                    "order_number": "MWZHLEFHHU",
+                    "quantity": 20,
+                    "price": "258460",
+                    "book": "{\"id\": 1, \"price\": \"12923\", \"title\": \"Otho Hudson\", \"quantity\": 54, \"created_at\": \"2022-08-13T21:09:30.000000Z\", \"deleted_at\": null, \"updated_at\": \"2022-08-14T20:31:33.000000Z\", \"book_number\": \"ELHGTDTENY\"}",
+                    "created_at": "2022-08-14T20:50:15.000000Z",
+                    "updated_at": "2022-08-14T20:50:15.000000Z",
+                    "deleted_at": null
+                }
+            ]
+        }
+    }
+```
 
-## Security Vulnerabilities
+### 8. api/report/payments  POST
+```json
+Parameters:
+    {
+      "from": "date_format:Y-m-d  >  2022-08-14  > optional"
+      "to":   "date_format:Y-m-d  >  2022-08-16  > optional"
+    }
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Response: 
+    {
+        "data": {
+            "1": [
+                {
+                    "id": 1,
+                    "user_id": 1,
+                    "card_id": 13,
+                    "price": "20",
+                    "created_at": "2022-08-13T21:19:22.000000Z",
+                    "updated_at": "2022-08-13T21:19:22.000000Z",
+                    "deleted_at": null
+                },
+                {
+                    "id": 4,
+                    "user_id": 1,
+                    "card_id": 13,
+                    "price": "20",
+                    "created_at": "2022-08-13T21:33:59.000000Z",
+                    "updated_at": "2022-08-13T21:33:59.000000Z",
+                    "deleted_at": null
+                }
+            ],
+            "11": [
+                {
+                    "id": 7,
+                    "user_id": 11,
+                    "card_id": 11,
+                    "price": "200",
+                    "created_at": "2022-08-14T20:50:32.000000Z",
+                    "updated_at": "2022-08-14T20:50:32.000000Z",
+                    "deleted_at": null
+                }
+            ]
+        }
+    }
+```
