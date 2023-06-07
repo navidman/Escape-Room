@@ -76,6 +76,11 @@ class BookingService
         return response(['data' => $booking], Response::HTTP_OK);
     }
 
+    public function getBookingList()
+    {
+        return $this->bookingRepository->getBookingsByUserId(Auth::user()->id);
+    }
+
     private function checkCapacity($timeSlot, $room, $bookingParticipants)
     {
         if ($room->max_participants >= $bookingParticipants + $timeSlot->participants) {

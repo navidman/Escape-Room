@@ -7,14 +7,9 @@ use App\Repositories\Interfaces\BookingRepositoryInterface;
 
 class BookingRepository implements BookingRepositoryInterface
 {
-    public function all()
+    public function getBookingsByUserId($userId)
     {
-
-    }
-
-    public function get($id)
-    {
-
+        return Booking::whereUserId($userId)->get();
     }
 
     public function save($data)

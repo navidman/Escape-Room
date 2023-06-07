@@ -4,9 +4,7 @@ namespace App\Repositories\Interfaces;
 
 interface BookingRepositoryInterface
 {
-    public function all();
-
-    public function get($id);
+    public function getBookingsByUserId($userId);
 
     public function save($data);
 
