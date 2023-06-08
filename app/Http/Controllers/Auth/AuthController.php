@@ -39,10 +39,10 @@ class AuthController extends Controller
         }
     }
 
-    public function revoke()
+    public function revoke(Request $request)
     {
         try {
-            AuthFacade::revoke();
+            AuthFacade::revoke($request);
             return response('Successfully logged out!', Response::HTTP_OK);
         } catch (\Throwable $throwable) {
             report($throwable);

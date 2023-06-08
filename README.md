@@ -1,8 +1,8 @@
-#  Book-Store
+#  Escape Room
 
 ## <g-emoji class="g-emoji" alias="arrow_down" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2b07.png">⬇️</g-emoji> Installation
 
-This is a test app for just showing my code skills in laravel. please clone the project and define a database and config it in .env .then run these commands listed below:
+This is a test app for just showing my code skills in laravel. Please clone the project and define a database and config it in .env file. Then run these commands listed below:
 
 ```bash
 composer install
@@ -11,7 +11,7 @@ composer install
 php artisan migrate
 ```
 ```bash
-php artisan db:seed -> users table(book-stores) and books table and cards table will be filled.
+php artisan db:seed -> users table and rooms table and timeSlots table will be filled.
 ```
 ```bash
 php artisan passport:install
@@ -26,7 +26,8 @@ php artisan optimize
 php artisan serve
 ```
 
-I wrote a single test for books index api just as sample. you can test it by running <code>php artisan test</code> command
+There are 3 users seeded in database(test, navid and omid). You can login with each one using 12345678 password. I like to mention that today is test user birthday. Happy birthday to him!
+I wrote a some tests for apis just as sample. You are welcome to run them by running <code>php artisan test</code> command
 
 -----
 
@@ -36,7 +37,7 @@ I wrote a single test for books index api just as sample. you can test it by run
 ```json
 parameters:
     {
-        "email":    "test@example.com"
+        "username":    "tes"
         "password": 12345678
     }
 
@@ -47,106 +48,114 @@ response:
        "access_token": "CJGREBNRFYMowA9vWuwfQFgkN_yaqVNMY-XecmQxXN-B6rw",
        "refresh_token": "CJGREBNRFYMowA9vWuwfQFgkN_yaqVNMY-XecmQxXN-B6rw",
        "user": {
-       "name": "test",
-       "email": "test@example.com",
-       "mobile": "09129120912"
+          "username": "test",
+          "birthday": "2023-06-07"
        }
     }
 ```
 
-### 2. api/revoke POST
+### 2. api/logout POST
 ```json
 Response:
     {
-      "message": "با موفقیت خارج شدید"
+      "message": "Successfully logged out!د"
     }
 ```
 
-### 3. api/books GET
+### 3. api/escape-rooms GET
 ```json
 Response:
     {
         "data": [
             {
                 "id": 1,
-                "title": "Otho Hudson", 
-                "book_number": "ELHGTDTENY",
-                "price": "12923",
-                "quantity": 74,
-                "created_at": "2022-08-13T21:09:30.000000Z",
-                "updated_at": "2022-08-13T21:11:07.000000Z",
+                "name": "Prison Break",
+                "theme": "Red",
+                "max_participants": 9,
+                "price": 1000,
+                "created_at": "2023-06-07T23:35:41.000000Z",
+                "updated_at": "2023-06-07T23:35:41.000000Z",
                 "deleted_at": null
             },
             {
                 "id": 2,
-                "title": "Dr. Judson Lehner II",
-                "book_number": "89WWF4GGYP",
-                "price": "11076",
-                "quantity": 39,
-                "created_at": "2022-08-13T21:09:30.000000Z",
-                "updated_at": "2022-08-13T21:09:30.000000Z",
+                "name": "Enigma",
+                "theme": "Blue",
+                "max_participants": 6,
+                "price": 2000,
+                "created_at": "2023-06-07T23:35:41.000000Z",
+                "updated_at": "2023-06-07T23:35:41.000000Z",
                 "deleted_at": null
             },
+            {
+                "id": 3,
+                "name": "Scary Lab",
+                "theme": "White",
+                "max_participants": 7,
+                "price": 3000,
+                "created_at": "2023-06-07T23:35:41.000000Z",
+                "updated_at": "2023-06-07T23:35:41.000000Z",
+                "deleted_at": null
+            }
         ]
     }
 ```
 
-### 4. api/order POST
+### 4. api/escape-rooms/{id} Get
 ```json
-Parameters:
-    {
-        "title":       "Otho Hudson"
-        "book_number": "ELHGTDTENY"
-        "amount":       20     
-    }
-
 Response:
     {
         "data": {
-            "user_id": 1,
-            "book_id": 1,
-            "order_number": "UYESAUFNKV",
-            "quantity": "20",
-            "price": 258460,
-            "book": {
+            "id": 1,
+            "name": "Prison Break",
+            "theme": "Red",
+            "max_participants": 9,
+            "price": 1000,
+            "created_at": "2023-06-07T23:35:41.000000Z",
+            "updated_at": "2023-06-07T23:35:41.000000Z",
+            "deleted_at": null
+        }
+    }
+```
+
+### 5. api/escape-rooms/{id}/time-slots Get
+```json
+Response:
+    {
+        "data": [
+            {
                 "id": 1,
-                "title": "Otho Hudson",
-                "book_number": "ELHGTDTENY",
-                "price": "12923",
-                "quantity": 74,
-                "created_at": "2022-08-13T21:09:30.000000Z",
-                "updated_at": "2022-08-13T21:11:07.000000Z",
-                "deleted_at": null
+                "room_id": 1,
+                "is_booked": 0,
+                "start": "2023-06-05 09:00:00",
+                "end": "2023-06-05 10:00:00"
             },
-            "updated_at": "2022-08-14T20:31:33.000000Z",
-            "created_at": "2022-08-14T20:31:33.000000Z",
-            "id": 2
-        }
+            {
+                "id": 2,
+                "room_id": 1,
+                "is_booked": 0,
+                "start": "2023-06-05 10:00:00",
+                "end": "2023-06-05 11:00:00"
+            },
+            {
+                "id": 3,
+                "room_id": 1,
+                "is_booked": 0,
+                "start": "2023-06-05 11:00:00",
+                "end": "2023-06-05 12:00:00"
+            },
+            {
+                "id": 4,
+                "room_id": 1,
+                "is_booked": 0,
+                "start": "2023-06-05 12:00:00",
+                "end": "2023-06-05 13:00:00"
+            }
+        ]
     }
 ```
 
-### 5. api/payment POST
-```json
-Parameters:
-    {
-      "amount": 200
-      "iban":   "TN1946981212305359050634"
-    }
-
-Response:
-    {
-        "data": {
-            "user_id": 11,
-            "card_id": 11,
-            "price": "200",
-            "updated_at": "2022-08-14T20:50:32.000000Z",
-            "created_at": "2022-08-14T20:50:32.000000Z",
-            "id": 7
-        }
-    }
-```
-
-### 6. api/report/accounting  GET
+### 6. api/bookings  GET
 ```json
 Response:
     {
@@ -154,108 +163,60 @@ Response:
             {
                 "id": 1,
                 "user_id": 1,
-                "to_pay": "51692",
-                "created_at": "2022-08-13T21:11:07.000000Z",
-                "updated_at": "2022-08-14T20:31:33.000000Z",
+                "room_id": 3,
+                "time_slot_id": 1,
+                "birthday_discount": 1,
+                "count": 3,
+                "price": 8100,
+                "created_at": "2023-06-07T23:59:02.000000Z",
+                "updated_at": "2023-06-07T23:59:02.000000Z",
                 "deleted_at": null
             },
             {
                 "id": 2,
-                "user_id": 11,
-                "to_pay": "51492",
-                "created_at": "2022-08-14T20:50:15.000000Z",
-                "updated_at": "2022-08-14T20:50:32.000000Z",
+                "user_id": 1,
+                "room_id": 2,
+                "time_slot_id": 1,
+                "birthday_discount": 0,
+                "count": 3,
+                "price": 6000,
+                "created_at": "2023-06-08T00:01:26.000000Z",
+                "updated_at": "2023-06-08T00:01:26.000000Z",
                 "deleted_at": null
             }
         ]
     }
 ```
 
-### 7. api/report/orders    POST   ->  sends orders groupBy user_id
+### 7. api/bookings    POST
 ```json
 Parameters:
     {
-        "from": "date_format:Y-m-d   >  2022-08-14  > optional"
-        "to":   "date_format:Y-m-d   >  2022-08-16  > optional "   
+        "timeSlot": "integer   >  min:1 max:500000  > required"
+        "roomId":   "integer   >  min:1 max:500  > required "   
+        "participants":   "integer  >  min:1 max:20  > required "   
     }
 
 Response:
     {
         "data": {
-            "1": [
-                {
-                    "id": 1,
-                    "user_id": 1,
-                    "book_id": 1,
-                    "order_number": "CTKTA1LBQ7",
-                    "quantity": 2,
-                    "price": "25846",
-                    "book": "{\"id\": 1, \"price\": \"12923\", \"title\": \"Otho Hudson\", \"quantity\": 76, \"created_at\": \"2022-08-13T21:09:30.000000Z\", \"deleted_at\": null, \"updated_at\": \"2022-08-13T21:09:30.000000Z\", \"book_number\": \"ELHGTDTENY\"}",
-                    "created_at": "2022-08-13T21:11:07.000000Z",
-                    "updated_at": "2022-08-13T21:11:07.000000Z",
-                    "deleted_at": null
-                }
-            ],
-            "11": [
-                {
-                    "id": 3,
-                    "user_id": 11,
-                    "book_id": 1,
-                    "order_number": "MWZHLEFHHU",
-                    "quantity": 20,
-                    "price": "258460",
-                    "book": "{\"id\": 1, \"price\": \"12923\", \"title\": \"Otho Hudson\", \"quantity\": 54, \"created_at\": \"2022-08-13T21:09:30.000000Z\", \"deleted_at\": null, \"updated_at\": \"2022-08-14T20:31:33.000000Z\", \"book_number\": \"ELHGTDTENY\"}",
-                    "created_at": "2022-08-14T20:50:15.000000Z",
-                    "updated_at": "2022-08-14T20:50:15.000000Z",
-                    "deleted_at": null
-                }
-            ]
+            "user_id": 1,
+            "room_id": 3,
+            "time_slot_id": 1,
+            "birthday_discount": true,
+            "count": "3",
+            "price": 8100,
+            "updated_at": "2023-06-07T23:59:02.000000Z",
+            "created_at": "2023-06-07T23:59:02.000000Z",
+            "id": 1
         }
     }
 ```
 
-### 8. api/report/payments  POST
+### 8. api/bookings/{id}  DELETE
 ```json
-Parameters:
-    {
-      "from": "date_format:Y-m-d  >  2022-08-14  > optional"
-      "to":   "date_format:Y-m-d  >  2022-08-16  > optional"
-    }
-
-Response: 
-    {
-        "data": {
-            "1": [
-                {
-                    "id": 1,
-                    "user_id": 1,
-                    "card_id": 13,
-                    "price": "20",
-                    "created_at": "2022-08-13T21:19:22.000000Z",
-                    "updated_at": "2022-08-13T21:19:22.000000Z",
-                    "deleted_at": null
-                },
-                {
-                    "id": 4,
-                    "user_id": 1,
-                    "card_id": 13,
-                    "price": "20",
-                    "created_at": "2022-08-13T21:33:59.000000Z",
-                    "updated_at": "2022-08-13T21:33:59.000000Z",
-                    "deleted_at": null
-                }
-            ],
-            "11": [
-                {
-                    "id": 7,
-                    "user_id": 11,
-                    "card_id": 11,
-                    "price": "200",
-                    "created_at": "2022-08-14T20:50:32.000000Z",
-                    "updated_at": "2022-08-14T20:50:32.000000Z",
-                    "deleted_at": null
-                }
-            ]
-        }
-    }
+Response:
+{
+    "data": "Booking with id 1 canceled successfully!"
+}
 ```

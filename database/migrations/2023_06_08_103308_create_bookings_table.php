@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger("time_slot_id")->index()->nullable();
             $table->boolean('birthday_discount')->default(false);
             $table->integer('count');
+            $table->integer('price');
             $table->timestamps();
             $table->softDeletes();
 

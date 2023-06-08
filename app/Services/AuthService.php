@@ -32,16 +32,27 @@ class AuthService
         }
         $user_info = [
             'username' => $user->username,
-            'role' => $user->role,
+            'birthday' => $user->birthday,
         ];
         $tokenInfo['user'] = $user_info;
         return $tokenInfo;
     }
 
-    public function revoke()
+    public function revoke($request)
     {
-        $user = Auth::user();
-        $user->token()->revoke();
+        $request->user()
+            ->tokens
+            ->each(function ($token, $key) {
+                $this->revokeAccessAndRefreshTokens($token->id);
+            });
         return true;
+    }
+
+    protected function revokeAccessAndRefreshTokens($tokenId) {
+        $tokenRepository = app('Laravel\Passport\TokenRepository');
+        $refreshTokenRepository = app('Laravel\Passport\RefreshTokenRepository');
+
+        $tokenRepository->revokeAccessToken($tokenId);
+        $refreshTokenRepository->revokeRefreshTokensByAccessTokenId($tokenId);
     }
 }

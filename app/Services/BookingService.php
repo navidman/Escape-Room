@@ -64,6 +64,7 @@ class BookingService
             'time_slot_id' => $timeSlot->id,
             'birthday_discount' => $isBirthday,
             'count' => $bookingParticipants,
+            'price' => $totalPrice,
         ]);
         $this->timeSlotRepository->update($timeSlot, [
             'participants' => $timeSlot->participants + $bookingParticipants,

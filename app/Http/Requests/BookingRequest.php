@@ -25,7 +25,7 @@ class BookingRequest extends FormRequest
     public function rules()
     {
         return [
-            'timeSlot' => ['required', 'integer', 'min:1', 'max:50000000'],
+            'timeSlot' => ['required', 'integer', 'min:1', 'max:500000'],
             'roomId' => ['required', 'integer', 'min:1', 'max:500'],
             'participants' => ['required', 'integer', 'min:1', 'max:20'],
         ];

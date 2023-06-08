@@ -28,8 +28,6 @@ class User extends Authenticatable
     /**
      * @var mixed
      */
-    private $password;
-
 
     public function findForPassport($username) {
         return $this->where('username', $username)->first();
